@@ -9,11 +9,17 @@ const userSchema = new mongoose.Schema({
   },
   email: {
       type: String,
-      required: [true, "Please add your email"]
+      required: [true, "Please add your email"], 
+      unique: true
   },
   password: {
       type: String,
-      required: [true, "Please enter a password"]
+      required: [true, "Please enter a password"],
+      unique: true
+  },
+  cart: {
+    type: Array,
+    
   },
   tokens: [
     {
