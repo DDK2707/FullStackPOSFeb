@@ -1,18 +1,38 @@
-// require('dotenv').config()
-
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
-
-mongoose.connect("mongodb+srv://DDK2707:BmaCjWn1KrVmsVLg@cluster0.gg8sh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
-
-app.use(express.json())
-
-const usersRouter = require('./routes/users')
-app.use('/users', usersRouter)
+const express = require("express");
+const PORT = process.env.PORT || 4000;
+const morgan = require("morgan");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const config = require("./config/db");
+const app = express();
 
 
-app.listen(3000, () => console.log('Server Started'))
+//configure database and mongoose
+mongoose
+  .connect(config.database, { useNewUrlParser: true })
+  .then(() => {
+    console.log("Database is connected");
+  })
+  .catch(err => {
+    console.log({ database_error: err });
+  });
+// db configuration ends here
+
+
+//registering cors
+app.use(cors());
+//configure body parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//configure body-parser ends here
+app.use(morgan("dev")); // configire morgan
+// define first route
+app.get("/", (req, res) => {
+  console.log("Hello MEVN Soldier");
+});
+const userRoutes = require("./routes/users"); //bring in our user routes
+app.use("/user", userRoutes);
+app.listen(PORT, () => {
+  console.log(`App is running on ${PORT}`);
+});
