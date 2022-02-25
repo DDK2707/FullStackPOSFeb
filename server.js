@@ -14,6 +14,4 @@ app.use(express.json())
 const usersRouter = require('./routes/users')
 app.use('/users', usersRouter)
 
-console.log("Pull request")
-
 app.listen(3000, () => console.log('Server Started'))
