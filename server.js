@@ -29,9 +29,13 @@ app.use(bodyParser.json());
 app.use(morgan("dev")); // configure morgan
 // define first route
 app.get("/", (req, res) => {
+<<<<<<< HEAD
   console.log("Welcome to ...");
+=======
+  console.log("Hello Soldier");
+>>>>>>> 09c702460a3071d7db79d0c5436e5ff9faf4b860
 });
-const userRoutes = require("./routes/users"); //bring in our user routes
+const userRoutes = require("./routes/users.js"); //bring in our user routes
 app.use("/user", userRoutes);
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
