@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const router = require("../routes/products")
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -19,4 +20,5 @@ const productSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Product', productSchema)
+const Product = mongoose.model('Product', productSchema)
+module.exports = Product

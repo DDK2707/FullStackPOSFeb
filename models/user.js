@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const router = require('../routes/users');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -19,7 +20,8 @@ const userSchema = new mongoose.Schema({
   },
   cart: {
     type: Array,
-    
+    required: false,
+    default: []
   },
   tokens: [
     {
@@ -49,6 +51,11 @@ userSchema.methods.generateAuthToken = async function() {
     await user.save();
     return token;
 };
+
+//getting the user's cart
+// router.get("/", authToken, (req, res) => {
+//   return res.send(req.user.cart)
+// });
 
 //method to search for user by email and password
 userSchema.statics.findByCredentials = async (email ,password) => {

@@ -26,10 +26,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //configure body-parser ends here
-app.use(morgan("dev")); // configire morgan
+app.use(morgan("dev")); // configure morgan
 // define first route
 app.get("/", (req, res) => {
-  console.log("Hello MEVN Soldier");
+  console.log("Welcome to ...");
 });
 const userRoutes = require("./routes/users"); //bring in our user routes
 app.use("/user", userRoutes);
