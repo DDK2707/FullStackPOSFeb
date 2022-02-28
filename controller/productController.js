@@ -23,7 +23,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Product."
+          err.message || "An error has occurred while creating the Product."
       });
     });
 };
@@ -54,7 +54,7 @@ exports.findOne = (req, res) => {
             else res.send(data)
         })
         .catch(err => {
-            res.status(500).send({ message: "Error retrieving Product with ID" + id});
+            res.status(500).send({ message: "Error retrieving Product with ID " + id});
         });
 };
 
