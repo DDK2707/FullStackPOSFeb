@@ -32,7 +32,10 @@ app.get("/", (req, res) => {
   console.log("Welcome to ...");
 });
 const userRoutes = require("./routes/usersRoute.js"); //bring in our user routes
+const productRoutes = require("./routes/productsRoute.js"); //bring in product routes
 app.use("/user", userRoutes);
+app.use("/product", productRoutes);
+
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });
