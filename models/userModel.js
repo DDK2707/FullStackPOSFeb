@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const router = require('../routes/users');
+const router = require('../routes/usersRoute');
 
 const userSchema = new mongoose.Schema({
   name: {

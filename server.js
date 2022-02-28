@@ -31,7 +31,7 @@ app.use(morgan("dev")); // configure morgan
 app.get("/", (req, res) => {
   console.log("Welcome to ...");
 });
-const userRoutes = require("./routes/users.js"); //bring in our user routes
+const userRoutes = require("./routes/usersRoute.js"); //bring in our user routes
 app.use("/user", userRoutes);
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
