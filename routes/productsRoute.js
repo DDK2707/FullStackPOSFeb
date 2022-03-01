@@ -5,7 +5,7 @@ const auth = require("../config/auth")
 
 router.post("/", auth, productController.create);
 router.get("/", productController.findAll);
-router.get("/:id", productController.findOne);
+router.get("/:id",auth, productController.findOne);
 router.put("/:id", auth, productController.update);
 router.delete("/:id", auth, productController.delete)
 

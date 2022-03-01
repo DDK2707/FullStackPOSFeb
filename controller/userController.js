@@ -29,8 +29,8 @@ exports.loginUser = async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: "Login failed. Recheck authentication credentials"})
         }
-        const token = await user.generateAuthToken();
-        res.status(201).json({user, token});
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        res.json({ accessToken: accessToken })
     }catch (err) {
         res.status(400).json({ err: err });
     }
