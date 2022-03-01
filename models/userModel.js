@@ -59,7 +59,7 @@ userSchema.methods.generateAuthToken = async function() {
 
 //method to search for user by email and password
 userSchema.statics.findByCredentials = async (email ,password) => {
-  const user = await User.findOne ({ email });
+  const user = await User.findOne({ email });   
   if (!user) {
     throw new Error ({ error: "Invalid login details "});
   };
@@ -70,6 +70,6 @@ userSchema.statics.findByCredentials = async (email ,password) => {
   return user;
 }
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema, 'user');
 module.exports = User
 

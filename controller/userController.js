@@ -1,39 +1,38 @@
+require('dotenv').config();
+
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
 const User = require("../models/userModel")
 
 exports.registerNewUser = async (req, res) => {
-    try {
-        // console.log(user);
-        // if (user.length >= 1) {
-        //     return res.status(409).json({
-        //         message: "Email already in use"
-        //     });
-        // }
-        const user = new User ({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        });
-        let data = await user.save();
-        const token = await user.generateAuthToken();
-        res.status(201).json({ data, token });
-    } catch (err) {
-        res.status(400).json({ err: err });
+    const body = req.body;
+    if ((!body.email && body.password)) {
+        return res.status(400).send({ error: "Data not entered correctly"})
     }
+    const user = new User(body);
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    user.save().then((doc) => res.status(201).send(doc));
 };
 
 exports.loginUser = async (req, res) => {
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
-        const user = await User.findByCredentials(email, password);
-        if (!user) {
-            return res.status(401).json({ error: "Login failed. Recheck authentication credentials"})
-        }
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-        res.json({ accessToken: accessToken })
-    }catch (err) {
-        res.status(400).json({ err: err });
+     const email = req.email;
+    const user = await User.findOne({ email });
+    console.log(user)
+
+    if (user) {
+      // check user password with hashed password stored in the database
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (validPassword) {
+        res.status(200).json({ message: "Valid password" });
+      } else {
+        res.status(400).json({ error: "Invalid Password" });
+      }
+    } else {
+      res.status(401).json({ error: "User does not exist" });
     }
+    // const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+    // res.json({ accessToken: accessToken })
 };
 
 exports.getUserDetails = async (req, res) => {
